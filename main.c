@@ -77,10 +77,10 @@ int	parse_clues(char *str, t_game *game)
 	i = 0;
 	while (i < 4)
 	{
-		game->clues.col_up[i] = clues_values[i];
-		game->clues.col_down[i] = clues_values[i + 4];
-		game->clues.row_left[i] = clues_values[i + 8];
-		game->clues.row_right[i] = clues_values[i + 12];
+		(*game).clues.col_up[i] = clues_values[i];
+		(*game).clues.col_down[i] = clues_values[i + 4];
+		(*game).clues.row_left[i] = clues_values[i + 8];
+		(*game).clues.row_right[i] = clues_values[i + 12];
 		i++;
 	}
 	return (1);
@@ -93,19 +93,19 @@ int	is_valid(t_game *game, int row, int col, int num)
 	i = 0;
 	while (i < 4)
 	{
-		if (game->grid[row][i] == num || game->grid[i][col] == num)
+		if ((*game).grid[row][i] == num || (*game).grid[i][col] == num)
 			return (0);
 		i++;
 	}
-	game->grid[row][col] = num;
+	(*game).grid[row][col] = num;
 	if (col == 4 - 1 && !check_row(game, row))
 	{
-		game->grid[row][col] = 0;
+		(*game).grid[row][col] = 0;
 		return (0);
 	}
 	if (row == 4 - 1 && !check_col(game, col))
 	{
-		game->grid[row][col] = 0;
+		(*game).grid[row][col] = 0;
 		return (0);
 	}
 	return (1);
@@ -126,7 +126,7 @@ int	solve(t_game *game, int row, int col)
 		{
 			if (solve(game, row, col + 1))
 				return (1);
-			game->grid[row][col] = 0;
+			(*game).grid[row][col] = 0;
 		}
 		num++;
 	}
